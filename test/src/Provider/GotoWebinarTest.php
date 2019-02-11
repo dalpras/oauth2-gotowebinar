@@ -1,14 +1,15 @@
-<?php namespace League\OAuth2\Client\Test\Provider;
+<?php 
+namespace League\OAuth2\Client\Test\Provider;
 
 use Mockery as m;
 
-class GotoWebinarTest extends \PHPUnit_Framework_TestCase
+class GotoWebinarTest extends \PHPUnit\Framework\TestCase
 {
     protected $provider;
 
     protected function setUp()
     {
-        $this->provider = new \League\OAuth2\Client\Provider\GotoWebinar([
+        $this->provider = new \DalPraS\OAuth2\Client\Provider\GotoWebinar([
             'clientId' => 'mock_client_id',
             'clientSecret' => 'mock_secret',
             'redirectUri' => 'none',

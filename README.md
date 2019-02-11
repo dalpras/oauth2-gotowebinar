@@ -17,23 +17,22 @@ Usage is the same as The League's OAuth client, using `\DalPraS\OAuth2\Client\Pr
 ### Authorization Code Flow
 
 ```php
-
-    $development = true;
-    $provider = new \DalPraS\OAuth2\Client\Provider\GotoWebinar([
-        // The client ID assigned to you by the provider
-        'clientId'     => 'your gotowebinar client id',
-        // The client ID assigned to you by the provider
-        'clientSecret' => 'your gotowebinar client password',
-        'redirectUri'  => 'your redirect uri after authorization'
-    ], [
-        // optional
-        'httpClient' => new \GuzzleHttp\Client([
-            // setup some options for using with localhost
-            'verify'  => $development ? false : true,
-            // timeout connection
-            'timeout' => 60
-        ])
-    ]);
+$development = true;
+$provider = new \DalPraS\OAuth2\Client\Provider\GotoWebinar([
+    // The client ID assigned to you by the provider
+    'clientId'     => 'your gotowebinar client id',
+    // The client ID assigned to you by the provider
+    'clientSecret' => 'your gotowebinar client password',
+    'redirectUri'  => 'your redirect uri after authorization'
+], [
+    // optional
+    'httpClient' => new \GuzzleHttp\Client([
+        // setup some options for using with localhost
+        'verify'  => $development ? false : true,
+        // timeout connection
+        'timeout' => 60
+    ])
+]);
 
 if (!isset($_GET['code'])) {
 
@@ -101,7 +100,7 @@ if (!isset($_GET['code'])) {
 
 ### Using GotoWebinar WEB API
 
-Interaction with the GoToWebinar API is very easy.  
+Interaction with the GoToWebinar API is very easy.
 
 ```php
     $provider = new \DalPraS\OAuth2\Client\Provider\GotoWebinar([

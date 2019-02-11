@@ -8,9 +8,8 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
 >
-    <logging>
+    <!-- <logging>
         <log type="coverage-html"
                 target="./build/coverage/html"
                 charset="UTF-8"
@@ -19,7 +18,7 @@
                 highLowerBound="70"/>
           <log type="coverage-clover"
                 target="./build/coverage/log/coverage.xml"/>
-    </logging>
+    </logging> -->
     <testsuites>
         <testsuite name="Package Test Suite">
             <directory suffix=".php">./test/</directory>
