@@ -123,7 +123,7 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
                 return $registrant;
             }
         }
-        return null;
+        return [];
     }
 
     /**
