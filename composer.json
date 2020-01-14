@@ -19,7 +19,8 @@
 		"logmeinic"
 	],
 	"require" : {
-		"league/oauth2-client" : "^2.0"
+		"league/oauth2-client" : "^2.0",
+		"php": "~7.2.0"
 	},
 	"require-dev" : {
 		"mockery/mockery": "^1.2",
