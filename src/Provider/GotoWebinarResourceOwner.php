@@ -5,7 +5,11 @@ namespace DalPraS\OAuth2\Client\Provider;
 use League\OAuth2\Client\Tool\ArrayAccessorTrait;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 
-class GotoWebinarResourceOwner implements ResourceOwnerInterface
+/**
+ * Classes implementing `ResourceOwnerInterface` may be used to represent
+ * the resource owner authenticated with a service provider.
+ */
+class GotoWebinarResourceOwner implements ResourceOwnerInterface 
 {
     use ArrayAccessorTrait;
 
@@ -25,7 +29,20 @@ class GotoWebinarResourceOwner implements ResourceOwnerInterface
 
     /**
      * Creates new resource owner.
-     *
+     * [
+     *  [key] (string)           =>	"Numeric value assigned within the LogMeIn system for a user-product pairing."
+     *  [accountKey] (string)    =>	"Numeric value assigned within the LogMeIn system for a company account."
+     *  [email] (string)         =>	"The email for this user in the system."
+     *  [firstName] (string)     =>	"User's first name"
+     *  [lastName] (string)      =>	"User's last name"
+     *  [locale] (code list)     => "User's geographical locale"
+     *  [adminRoles] (role list) => "The admin roles, if any, assigned to this user for this account."
+     *  [accounts] (header)      =>	"A header for additional products this user is licensed for"
+     *  [name] (string)          =>	"Account name created by user at time of account creation."
+     *  [adminRoles] (role list) => "The admin roles, if any, assigned to this user for this account."
+     * ]
+     * 
+     * @example
      * [
      *  [key] => 5242356755789656512,
      *  [accountKey] => 3533365456698298798,
@@ -44,6 +61,15 @@ class GotoWebinarResourceOwner implements ResourceOwnerInterface
     public function __construct(array $response = array())
     {
         $this->response = $response;
+    }
+
+    /**
+     * Get resource owner key
+     *
+     * @return string
+     */
+    public function getId() {
+        return $this->getKey();
     }
 
     /**

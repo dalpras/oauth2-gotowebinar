@@ -2,8 +2,6 @@
 
 namespace DalPraS\OAuth2\Client\Resources;
 
-use DalPraS\OAuth2\Client\Decorators\AccessTokenDecorator;
-
 abstract class AuthenticatedResourceAbstract {
 
     /**
