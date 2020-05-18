@@ -3,7 +3,6 @@
 namespace DalPraS\OAuth2\Client\Resources;
 
 use DalPraS\OAuth2\Client\Decorators\AccessTokenDecorator;
-use DalPraS\OAuth2\Client\Provider\Exception\GotoWebinarProviderException;
 
 class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbstract {
 

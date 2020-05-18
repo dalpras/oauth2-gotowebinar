@@ -2,11 +2,12 @@
 
 namespace DalPraS\OAuth2\Client\Decorators;
 
-use Exception;
-use Psr\Http\Message\ResponseInterface;
-use Throwable;
-use League\OAuth2\Server\Exception\OAuthServerException;
-
+/**
+ * If you wrap the accessToken with this decorator, you can
+ * access other properties of the accessToken that are stored inside the token.
+ * @author DalPraS
+ *
+ */
 class AccessTokenDecorator {
 
     /**

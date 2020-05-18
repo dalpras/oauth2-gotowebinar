@@ -14,13 +14,6 @@ class GotoWebinarResourceOwner implements ResourceOwnerInterface
     use ArrayAccessorTrait;
 
     /**
-     * Domain
-     *
-     * @var string
-     */
-    protected $domain;
-
-    /**
      * Raw response
      *
      * @var array
@@ -29,6 +22,8 @@ class GotoWebinarResourceOwner implements ResourceOwnerInterface
 
     /**
      * Creates new resource owner.
+     * 
+     * @example from docs
      * [
      *  [key] (string)           =>	"Numeric value assigned within the LogMeIn system for a user-product pairing."
      *  [accountKey] (string)    =>	"Numeric value assigned within the LogMeIn system for a company account."
@@ -42,18 +37,43 @@ class GotoWebinarResourceOwner implements ResourceOwnerInterface
      *  [adminRoles] (role list) => "The admin roles, if any, assigned to this user for this account."
      * ]
      * 
-     * @example
+     * @example from real case
      * [
-     *  [key] => 5242356755789656512,
-     *  [accountKey] => 3533365456698298798,
-     *  [email] => myname@company.com,
-     *  [firstName] => Company,
-     *  [lastName] => Training,
-     *  [locale] => it_IT,
-     *  [adminRoles] => [[0] => MANAGE_SETTINGS, [1] => MANAGE_SEATS, [2] => MANAGE_DEVICE_GROUPS, [3] => MANAGE_GROUPS, [4] => SUPER_USER, [5] => RUN_REPORTS, [6] => MANAGE_USERS],
-     *  [accounts] => [[0] => [[key] => 3573263642246205708, [name] => Company, [adminRoles] => [[0] => SUPER_USER, [1] => MANAGE_USERS, [2] => MANAGE_SEATS, [3] => MANAGE_SETTINGS, [4] => MANAGE_GROUPS, [5] => RUN_REPORTS, [6] => MANAGE_DEVICE_GROUPS]]],
-     *  [createTime] => 1111113497748,
-     *  [products] => [[0] => G2M, [1] => G2W]
+     *  [key] => 5226234234256588012, 
+     *  [accountKey] => 3573452345454655708, 
+     *  [email] => myname@company.com, 
+     *  [firstName] => Company, 
+     *  [lastName] => Training, 
+     *  [locale] => it_IT, 
+     *  [timeZone] => Europe/Amsterdam, 
+     *  [adminRoles] => [
+     *      [0] => MANAGE_SETTINGS, 
+     *      [1] => MANAGE_SEATS, 
+     *      [2] => MANAGE_DEVICE_GROUPS, 
+     *      [3] => MANAGE_GROUPS, 
+     *      [4] => MANAGE_SETTINGS_PROFILES, 
+     *      [5] => SUPER_USER, 
+     *      [6] => RUN_REPORTS, 
+     *      [7] => MANAGE_USERS
+     *  ], 
+     *  [accounts] => [
+     *      [0] => [
+     *          [key] => 3573263565346546368, 
+     *          [name] => Company, 
+     *          [adminRoles] => [
+     *              [0] => SUPER_USER, 
+     *              [1] => MANAGE_USERS, 
+     *              [2] => MANAGE_SEATS, 
+     *              [3] => MANAGE_SETTINGS, 
+     *              [4] => MANAGE_GROUPS, 
+     *              [5] => RUN_REPORTS, 
+     *              [6] => MANAGE_DEVICE_GROUPS, 
+     *              [7] => MANAGE_SETTINGS_PROFILES
+     *           ]
+     *        ]
+     *   ], 
+     *   [createTime] => 1506076497748, 
+     *   [products] => [[0] => G2W, [1] => G2M]
      * ]
      *
      * @param array  $response

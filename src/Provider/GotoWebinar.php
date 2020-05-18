@@ -159,8 +159,8 @@ class GotoWebinar extends AbstractProvider
     protected function createResourceOwner(array $response, AccessToken $token)
     {
         $user = new GotoWebinarResourceOwner($response);
-
-        return $user->setDomain($this->domain);
+        
+        return $user;
     }
 
 
