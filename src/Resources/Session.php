@@ -95,8 +95,8 @@ class Session extends AuthenticatedResourceAbstract
     /**
      * Get session performance
      *
-     * @param $webinarKey
-     * @param $sessionKey
+     * @param int|string $webinarKey
+     * @param int|string $sessionKey
      * @return array
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
@@ -116,8 +116,8 @@ class Session extends AuthenticatedResourceAbstract
     /**
      * Get session polls
      *
-     * @param $webinarKey
-     * @param $sessionKey
+     * @param int|string $webinarKey
+     * @param int|string $sessionKey
      * @return array
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
@@ -137,8 +137,8 @@ class Session extends AuthenticatedResourceAbstract
     /**
      * Get session questions
      *
-     * @param $webinarKey
-     * @param $sessionKey
+     * @param int|string $webinarKey
+     * @param int|string $sessionKey
      * @return array
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
@@ -158,8 +158,8 @@ class Session extends AuthenticatedResourceAbstract
     /**
      * Get session surveys
      *
-     * @param $webinarKey
-     * @param $sessionKey
+     * @param int|string $webinarKey
+     * @param int|string $sessionKey
      * @return array
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
