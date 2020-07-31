@@ -10,6 +10,8 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * Get all webinars.
      *
      * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
      *
      * @return array
      * [
@@ -55,6 +57,8 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * Get upcoming webinars.
      *
      * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
      *
      * @return array
      * [
@@ -99,6 +103,8 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * Get webinars in date range.
      *
      * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
+     *
+     * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
@@ -146,6 +152,8 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
     /**
      * Get info for a single webinar by passing the webinar id or
      * in GotoWebinar's terms webinarKey.
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinar
      *
      * @param int $webinarKey
      * @return array
@@ -184,7 +192,9 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
     /**
      * Create a new webinar.
      * Return the the WebinarKey.
-     *
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2#operation/createWebinar
+     * 
      * @param array $body
      * [
      *      "subject" => "subject",
@@ -217,6 +227,8 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
     /**
      * Update an existing webinar.
      *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/updateWebinar
+     *
      * @param string $webinarKey
      * @param array $body
      * [
@@ -243,6 +255,8 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
     /**
      * Delete a webinar.
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}?sendCancellationEmails=false
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2#operation/cancelWebinar
      *
      * @param string $webinarKey
      * @return void

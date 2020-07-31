@@ -169,6 +169,34 @@ Interaction with the GoToWebinar API is very easy.
     }
 ```
 
+### Using Storage
+
+Storage has been introduced for storing Organizer's accessTokens in a repository (only \Redis has been implemented).  ResourceLoader use this repository to perform GotoWebinar information access in an easy way.
+With this feature registrants can subscribe to a course using the accessToken stored by Organizers in the repository.  
+ResourceLoader manage the data in a centralized way.
+
+```php
+    $provider = new \DalPraS\OAuth2\Client\Provider\GotoWebinar([
+        'clientId'                => 'demoapp',
+        'clientSecret'            => 'demopass',
+        'redirectUri'             => 'http://example.com/your-redirect-url/'
+    ]);
+
+    // Organizers stored their AccessTokens in storage
+    $storage = new \DalPraS\OAuth2\Client\Storage\RedisTokenStorage($redisInstance);
+
+    // Connecting ResourceLoader to Storage is possible to retrieve information from multiple organizers
+    $resourceLoader = new \DalPraS\OAuth2\Client\Loader\ResourceLoader($storage, $provider);
+
+    // webinars from Organizer 1
+    $webinars = $resourceLoader->getWebinarResource($organizerKey1)->getWebinars();
+
+    // registrants from Organizer 2
+    $registrants = $resourceLoader->getRegistrantResource($organizerKey2)->getRegistrants($webinarKey);
+
+```
+
+
 ## Testing
 
 ```bash

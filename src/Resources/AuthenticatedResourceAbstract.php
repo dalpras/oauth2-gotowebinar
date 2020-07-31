@@ -2,6 +2,9 @@
 
 namespace DalPraS\OAuth2\Client\Resources;
 
+use DalPraS\OAuth2\Client\Provider\GotoWebinar;
+use League\OAuth2\Client\Token\AccessToken;
+
 abstract class AuthenticatedResourceAbstract {
 
     /**
@@ -20,7 +23,7 @@ abstract class AuthenticatedResourceAbstract {
      * @param \DalPraS\OAuth2\Client\Provider\GotoWebinar $provider
      * @param \League\OAuth2\Client\Token\AccessToken $accessToken
      */
-    public function __construct(\DalPraS\OAuth2\Client\Provider\GotoWebinar $provider, \League\OAuth2\Client\Token\AccessToken $accessToken) {
+    public function __construct(GotoWebinar $provider, AccessToken $accessToken) {
         $this->provider    = $provider;
         $this->accessToken = $accessToken;
     }

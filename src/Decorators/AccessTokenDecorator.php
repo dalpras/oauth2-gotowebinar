@@ -3,6 +3,8 @@
 namespace DalPraS\OAuth2\Client\Decorators;
 
 /**
+ * Wrapper of the accessToken for retriving the properties of the accessToken.
+ * 
  * If you wrap the accessToken with this decorator, you can
  * access other properties of the accessToken that are stored inside the token.
  * @author DalPraS

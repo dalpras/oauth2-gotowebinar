@@ -10,6 +10,8 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
      * Get all registrants for a given webinar.
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/registrants
      *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getAllRegistrantsForWebinar
+     *
      * @param int $webinarKey
      * @return array
      * [
@@ -34,6 +36,8 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
     /**
      * Get a single registrant for a given webinar.
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/registrants/{registrantKey}
+     *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getRegistrant
      *
      * @param int $webinarKey
      * @param int $registrantKey
@@ -79,6 +83,8 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
 
     /**
      * Get a single registrant for a given webinar by email.
+     *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getAllRegistrantsForWebinar
      *
      * @param int $webinarKey
      * @param string $email
@@ -130,6 +136,8 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
      * Subscribe a registrant for a webinar.
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/registrants
      *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/createRegistrant
+     *
      * @param int $webinarKey
      * @param array $body
      * [
@@ -175,6 +183,8 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
     /**
      * Unsubscribe a registrant from a webinar.
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/registrants/{registrantKey}
+     *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/deleteRegistrant
      *
      * @param int $webinarKey
      * @param int $registrantKey
