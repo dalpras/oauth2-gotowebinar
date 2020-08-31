@@ -27,16 +27,21 @@ class ResourceLoader {
      * Check if the token is valid and in case refreshes the token and
      * save it in your current storage.
      *
-     * @param \League\OAuth2\Client\Token\AccessToken $accessToken
+     * @param \League\OAuth2\Client\Token\AccessToken|null $accessToken
      * @return \League\OAuth2\Client\Token\AccessTokenInterface
      */
-    protected function refreshToken(\League\OAuth2\Client\Token\AccessToken $accessToken) {
-        if ($accessToken->hasExpired()) {
-            $accessToken = $this->provider->getAccessToken('refresh_token', [
-                'refresh_token' => $accessToken->getRefreshToken()
-            ]);
-            // Purge old access token and store new access token to your data store.
-            $this->storage->saveToken($accessToken);
+    protected function refreshToken(?\League\OAuth2\Client\Token\AccessToken $accessToken) {
+        switch (true) {
+            case $accessToken === null:
+                break;
+            
+            case $accessToken->hasExpired():
+                $accessToken = $this->provider->getAccessToken('refresh_token', [
+                    'refresh_token' => $accessToken->getRefreshToken()
+                ]);
+                // Purge old access token and store new access token to your data store.
+                $this->storage->saveToken($accessToken);
+                break;
         }
         return $accessToken;
     }

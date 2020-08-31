@@ -4,7 +4,6 @@
 	"license" : "MIT",
 	"authors" : [{
 			"name" : "Stefano Dal Prà",
-			"email" : "stefanodalpra@gmail.com",
 			"homepage" : "https://github.com/dalpras"
 		}
 	],
@@ -21,7 +20,7 @@
 	"require" : {
 		"league/oauth2-client" : "^2.0",
 		"php" : ">=7.2.0",
-		"ext-json": "*"
+		"ext-json" : "*"
 	},
 	"require-dev" : {
 		"mockery/mockery" : "^1.2",
@@ -42,6 +41,6 @@
 			"dev-master" : "1.0.x-dev"
 		}
 	},
-	"minimum-stability": "dev",
-	"prefer-stable": true
+	"minimum-stability" : "dev",
+	"prefer-stable" : true
 }
