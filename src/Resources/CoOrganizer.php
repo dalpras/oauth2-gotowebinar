@@ -60,7 +60,7 @@ class CoOrganizer extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/deleteCoorganizer
      */
-    public function deleteCoOrganizer($webinarKey, $coOrganizerKey, bool $external = false): ?array
+    public function deleteCoOrganizer($webinarKey, $coOrganizerKey, bool $external = false)
     {
         $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
 
