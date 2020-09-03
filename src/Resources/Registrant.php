@@ -175,6 +175,9 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
     public function createRegistrant($webinarKey, $body) : array {
         $url = $this->provider->domain . '/G2W/rest/v2/organizers/' . (new AccessTokenDecorator($this->accessToken))->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants';
         $request  = $this->provider->getAuthenticatedRequest('POST', $url, $this->accessToken, [
+            'headers' => [
+                'Accept' => 'application/vnd.citrix.g2wapi-v1.1+json',
+            ],
             'body' => json_encode($body)
         ]);
         return $this->provider->getParsedResponse($request);
