@@ -1,6 +1,6 @@
 {
 	"name" : "dalpras/oauth2-gotowebinar",
-	"description" : "Citrix GoToWebinar OAuth 2.0 Client Provider for the PHP League's OAuth 2.0 Client",
+	"description" : "LogMeIn GoToWebinar OAuth 2.0 Client Provider for the PHP League's OAuth 2.0 Client",
 	"license" : "MIT",
 	"authors" : [{
 			"name" : "Stefano Dal Prà",
@@ -13,7 +13,7 @@
 		"client",
 		"authorization",
 		"authorisation",
-		"citrix",
+		"logmein",
 		"gotowebinar",
 		"logmeinic"
 	],

@@ -1,6 +1,6 @@
-# Citrix GoToWebinar Provider for OAuth 2.0 Client
+# LogMeIn GoToWebinar Provider for OAuth 2.0 Client
 
-This package provides Citrix GoToWebinar OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
+This package provides LogMeIn GoToWebinar OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
 ## Installation
 

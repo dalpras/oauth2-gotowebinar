@@ -91,7 +91,7 @@ class GotoWebinarTest extends TestCase
 
     public function testGotoWebinarEnterpriseDomainUrls(): void
     {
-        $this->provider->domain = 'https://citrix.company.com';
+        $this->provider->domain = 'https://my.company.com';
 
 
         $response = m::mock(ResponseInterface::class);

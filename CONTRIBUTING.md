@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Citrix GoToWebinar](https://github.com/dalpras/oauth2-gotowebinar).
+We accept contributions via Pull Requests on [LogMeIn GoToWebinar](https://github.com/dalpras/oauth2-gotowebinar).
 
 
 ## Running Tests
