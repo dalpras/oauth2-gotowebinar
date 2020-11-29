@@ -3,28 +3,33 @@
 namespace DalPraS\OAuth2\Client\Resources;
 
 use DalPraS\OAuth2\Client\Decorators\AccessTokenDecorator;
+use DalPraS\OAuth2\Client\Response\ApiResponse;
+use Google\Protobuf\Api;
 
 class Attendee extends AuthenticatedResourceAbstract
 {
+    /**
+     * @param array $params
+     * @return ApiResponse|mixed
+     */
+    public function get($params = [], $path = "")
+    {
+        return new ApiResponse($this->request("get", $path, $params), '', $path, $params);
+    }
+
     /**
      * Get session attendees
      *
      * @param int|string $webinarKey
      * @param int|string $sessionKey
-     * @return array
+     * @return ApiResponse
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendees
      */
-    public function getSessionAttendees($webinarKey, $sessionKey): array
+    public function getSessionAttendees($webinarKey, $sessionKey): ApiResponse
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees";
-
-        $request = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return $this->get([], "/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees");
     }
 
     /**
@@ -33,20 +38,14 @@ class Attendee extends AuthenticatedResourceAbstract
      * @param int|string $webinarKey
      * @param int|string $sessionKey
      * @param int|string $registrantKey
-     * @return array
+     * @return ApiResponse
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendee
      */
-    public function getAttendee($webinarKey, $sessionKey, $registrantKey): array
+    public function getAttendee($webinarKey, $sessionKey, $registrantKey): ApiResponse
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}";
-
-        $request = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return $this->get([], "/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}");
     }
 
     /**
@@ -55,20 +54,14 @@ class Attendee extends AuthenticatedResourceAbstract
      * @param int|string $webinarKey
      * @param int|string $sessionKey
      * @param int|string $registrantKey
-     * @return array
+     * @return ApiResponse
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeePollAnswers
      */
-    public function getAttendeePollAnswers($webinarKey, $sessionKey, $registrantKey): array
+    public function getAttendeePollAnswers($webinarKey, $sessionKey, $registrantKey): ApiResponse
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}/polls";
-
-        $request = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return $this->get([], "/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}/polls");
     }
 
     /**
@@ -77,20 +70,14 @@ class Attendee extends AuthenticatedResourceAbstract
      * @param int|string $webinarKey
      * @param int|string $sessionKey
      * @param int|string $registrantKey
-     * @return array
+     * @return ApiResponse
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeeQuestions
      */
-    public function getAttendeeQuestions($webinarKey, $sessionKey, $registrantKey): array
+    public function getAttendeeQuestions($webinarKey, $sessionKey, $registrantKey): ApiResponse
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}/questions";
-
-        $request = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return $this->get([], "/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}/questions");
     }
 
     /**
@@ -99,19 +86,13 @@ class Attendee extends AuthenticatedResourceAbstract
      * @param int|string $webinarKey
      * @param int|string $sessionKey
      * @param int|string $registrantKey
-     * @return array
+     * @return ApiResponse
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeeSurveyAnswers
      */
-    public function getAttendeeSurveyAnswers($webinarKey, $sessionKey, $registrantKey): array
+    public function getAttendeeSurveyAnswers($webinarKey, $sessionKey, $registrantKey): ApiResponse
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}/surveys";
-
-        $request = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return $this->get([], "/webinars/{$webinarKey}/sessions/{$sessionKey}/attendees/{$registrantKey}/surveys");
     }
 }

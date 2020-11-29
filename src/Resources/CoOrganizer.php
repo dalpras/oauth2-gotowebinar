@@ -6,6 +6,7 @@ use DalPraS\OAuth2\Client\Decorators\AccessTokenDecorator;
 
 class CoOrganizer extends AuthenticatedResourceAbstract
 {
+
     /**
      * Get co-organizers
      *
