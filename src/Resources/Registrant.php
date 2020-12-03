@@ -2,35 +2,26 @@
 
 namespace DalPraS\OAuth2\Client\Resources;
 
-use DalPraS\OAuth2\Client\Decorators\AccessTokenDecorator;
+use DalPraS\OAuth2\Client\ResultSet\SimpleResultSet;
+use DalPraS\OAuth2\Client\ResultSet\ResultSetInterface;
 
-class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbstract {
-
+class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbstract
+{
     /**
      * Get all registrants for a given webinar.
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/registrants
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/getAllRegistrantsForWebinar
      *
-     * @param int $webinarKey
-     * @return array
-     * [
-     *   [
-     *     "lastName" => "string",
-     *     "email" => "string",
-     *     "firstName" => "string",
-     *     "registrantKey" => 0,
-     *     "registrationDate" => "2019-01-30T09:00:00Z",
-     *     "status" => "APPROVED",
-     *     "joinUrl" => "string",
-     *     "timeZone" => "string"
-     *   ]
-     * ]
+     * @param string $webinarKey
      */
-    public function getRegistrants($webinarKey):array {
-        $url = $this->provider->domain . '/G2W/rest/v2/organizers/' . (new AccessTokenDecorator($this->accessToken))->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants';
+    public function getRegistrants(string $webinarKey): ResultSetInterface
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/registrants', [
+            'webinarKey' => $webinarKey,
+        ]);
         $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
 
     /**
@@ -39,46 +30,17 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/getRegistrant
      *
-     * @param int $webinarKey
-     * @param int $registrantKey
-     * @return array|NULL
-     * [
-     *     "firstName" => "string",
-     *     "lastName" => "string",
-     *     "email" => "string",
-     *     "registrantKey" => 0,
-     *     "registrationDate" => "2019-01-30T09:00:00Z",
-     *     "source" => "string",
-     *     "status" => "APPROVED",
-     *     "joinUrl" => "string",
-     *     "timeZone" => "string",
-     *     "phone" => "string",
-     *     "state" => "string",
-     *     "city" => "string",
-     *     "organization" => "string",
-     *     "zipCode" => "string",
-     *     "numberOfEmployees" => "string",
-     *     "industry" => "string",
-     *     "jobTitle" => "string",
-     *     "purchasingRole" => "string",
-     *     "implementationTimeFrame" => "string",
-     *     "purchasingTimeFrame" => "string",
-     *     "questionsAndComments" => "string",
-     *     "employeeCount" => "string",
-     *     "country" => "string",
-     *     "address" => "string",
-     *     "type" => "REGULAR",
-     *     "unsubscribed" => true,
-     *     "responses" => [[
-     *         "answer" => "string",
-     *         "question" => "string"
-     *     ]]
-     * ]
+     * @param string $webinarKey
+     * @param string $registrantKey
      */
-    public function getRegistrant($webinarKey, $registrantKey):array {
-        $url = $this->provider->domain . '/G2W/rest/v2/organizers/' . (new AccessTokenDecorator($this->accessToken))->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants/' . $registrantKey;
+    public function getRegistrant(string $webinarKey, string $registrantKey): ResultSetInterface
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/registrants/{registrantKey}', [
+            'webinarKey' => $webinarKey,
+            'registrantKey' => $registrantKey
+        ]);
         $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
 
     /**
@@ -86,50 +48,19 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/getAllRegistrantsForWebinar
      *
-     * @param int $webinarKey
+     * @param string $webinarKey
      * @param string $email
      * @return array|NULL
-     * [
-     *     "firstName" => "string",
-     *     "lastName" => "string",
-     *     "email" => "string",
-     *     "registrantKey" => 0,
-     *     "registrationDate" => "2019-01-30T09:00:00Z",
-     *     "source" => "string",
-     *     "status" => "APPROVED",
-     *     "joinUrl" => "string",
-     *     "timeZone" => "string",
-     *     "phone" => "string",
-     *     "state" => "string",
-     *     "city" => "string",
-     *     "organization" => "string",
-     *     "zipCode" => "string",
-     *     "numberOfEmployees" => "string",
-     *     "industry" => "string",
-     *     "jobTitle" => "string",
-     *     "purchasingRole" => "string",
-     *     "implementationTimeFrame" => "string",
-     *     "purchasingTimeFrame" => "string",
-     *     "questionsAndComments" => "string",
-     *     "employeeCount" => "string",
-     *     "country" => "string",
-     *     "address" => "string",
-     *     "type" => "REGULAR",
-     *     "unsubscribed" => true,
-     *     "responses" => [[
-     *         "answer" => "string",
-     *         "question" => "string"
-     *     ]]
-     * ]
      */
-    public function getRegistrantByEmail($webinarKey, $email):array {
+    public function getRegistrantByEmail(string $webinarKey, string $email): ResultSetInterface
+    {
         $registrants = $this->getRegistrants($webinarKey);
         foreach ($registrants as $registrant) {
             if ($registrant['email'] === $email) {
-                return $registrant;
+                return new SimpleResultSet($registrant);
             }
         }
-        return [];
+        return new SimpleResultSet();
     }
 
     /**
@@ -138,49 +69,22 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/createRegistrant
      *
-     * @param int $webinarKey
+     * @param string $webinarKey
      * @param array $body
-     * [
-     *     "firstName" => "firstName",
-     *     "lastName" => "lastName",
-     *     "email" => "email",
-     *     "source" => "source",
-     *     "address" => "address",
-     *     "city" => "city",
-     *     "state" => "state",
-     *     "zipCode" => "zipCode",
-     *     "country" => "country",
-     *     "phone" => "phone",
-     *     "organization" => "organization",
-     *     "jobTitle" => "jobTitle",
-     *     "questionsAndComments" => "questionsAndComments",
-     *     "industry" => "industry",
-     *     "numberOfEmployees" => "numberOfEmployees",
-     *     "purchasingTimeFrame" => "purchasingTimeFrame",
-     *     "purchasingRole" => "purchasingRole",
-     *     "responses" => [[
-     *         "questionKey" => 0,
-     *         "responseText" => "string",
-     *         "answerKey" => 0
-     *     ]]
-     * ];
      * @return array
-     * [
-     *   "joinUrl" => "string",
-     *   "asset" => true
-     *   "registrantKey" => "integer",
-     *   "status" => "APPROVED",
-     * ]
      */
-    public function createRegistrant($webinarKey, $body) : array {
-        $url = $this->provider->domain . '/G2W/rest/v2/organizers/' . (new AccessTokenDecorator($this->accessToken))->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants';
+    public function createRegistrant(string $webinarKey, array $body): ResultSetInterface
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/registrants', [
+            'webinarKey' => $webinarKey,
+        ]);
         $request  = $this->provider->getAuthenticatedRequest('POST', $url, $this->accessToken, [
             'headers' => [
                 'Accept' => 'application/vnd.citrix.g2wapi-v1.1+json',
             ],
             'body' => json_encode($body)
         ]);
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
 
     /**
@@ -189,15 +93,17 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/deleteRegistrant
      *
-     * @param int $webinarKey
-     * @param int $registrantKey
+     * @param string $webinarKey
+     * @param string $registrantKey
      * @return array
      */
-    public function deleteRegistrant($webinarKey, $registrantKey) {
-        $url = $this->provider->domain . '/G2W/rest/v2/organizers/' . (new AccessTokenDecorator($this->accessToken))->getOrganizerKey() . '/webinars/' . $webinarKey . '/registrants/' . $registrantKey;
+    public function deleteRegistrant(string $webinarKey, string $registrantKey): ResultSetInterface
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/registrants/{registrantKey}', [
+            'webinarKey' => $webinarKey,
+            'registrantKey' => $registrantKey
+        ]);
         $request  = $this->provider->getAuthenticatedRequest('DELETE', $url, $this->accessToken);
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
-
-
 }

@@ -78,5 +78,40 @@ class ResourceLoader {
         $accessToken = $this->refreshToken($this->storage->fetchToken($organizerKey));
         return $accessToken ? $this->provider->getResourceOwner($accessToken) : null;
     }
+    
+    /**
+     * Get the Attenee resource
+     *
+     * @param string $organizerKey
+     * @return \DalPraS\OAuth2\Client\Resources\Attendee|NULL
+     */
+    public function getAttendeesResource(string $organizerKey)
+    {
+        $accessToken = $this->refreshToken($this->storage->fetchToken($organizerKey));
+        return $accessToken ? (new \DalPraS\OAuth2\Client\Resources\Attendee($this->provider, $accessToken)) : null;
+    }
+    
+    /**
+     * Get the Attenee resource
+     *
+     * @param string $organizerKey
+     * @return \DalPraS\OAuth2\Client\Resources\Session|NULL
+     */
+    public function getSessionResource(string $organizerKey)
+    {
+        $accessToken = $this->refreshToken($this->storage->fetchToken($organizerKey));
+        return $accessToken ? (new \DalPraS\OAuth2\Client\Resources\Session($this->provider, $accessToken)) : null;
+    }
+    
+    /**
+     * @param string $organizerKey
+     * @return \DalPraS\OAuth2\Client\Resources\CoOrganizer|null
+     */
+    public function getOrganizerResource(string $organizerKey)
+    {
+        $accessToken = $this->refreshToken($this->storage->fetchToken($organizerKey));
+        return $accessToken ? (new \DalPraS\OAuth2\Client\Resources\CoOrganizer($this->provider, $accessToken)) : null;
+    }
+    
 }
 

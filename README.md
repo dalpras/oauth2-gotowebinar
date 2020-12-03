@@ -113,13 +113,13 @@ Interaction with the GoToWebinar API is very easy.
 
     $resWebinar = new \DalPraS\OAuth2\Client\Resources\Webinar($provider, $accessToken);
     try {
-        $data = $resWebinar->getWebinars();
+        $data = $resWebinar->getWebinars(new \DateTime('-1 year'), new \DateTime('+1 year'), 0, 10);
 
-        // or
-        $data = $resWebinar->getPast(new \DateTime('-1 year'));
+        // or @deprecated, use getWebinars
+        // $data = $resWebinar->getPast(new \DateTime('-1 year'));
 
-        // or
-        $data = $resWebinar->getWebinar('webinarKey');
+        // or @deprecated, use getWebinars
+        // $data = $resWebinar->getWebinar('webinarKey');
 
         // or
         $data = $resWebinar->deleteWebinar('webinarKey');
@@ -157,7 +157,8 @@ Interaction with the GoToWebinar API is very easy.
         // or
         $data = $resRegistrant->deleteRegistrant('webinarKey', 'registrantKey');
 
-        return json_encode($data);
+        // data is ResultSetInterface = ArrayObject
+        return json_encode($data->getArrayCopy());
 
     } catch (GotoWebinarProviderException $e) {
         // return a psr7 response message (using for example zend\diactoros)
