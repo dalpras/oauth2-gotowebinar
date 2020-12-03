@@ -2,51 +2,48 @@
 
 namespace DalPraS\OAuth2\Client\Resources;
 
-use DalPraS\OAuth2\Client\Decorators\AccessTokenDecorator;
+use DalPraS\OAuth2\Client\ResultSet\SimpleResultSet;
+use DalPraS\OAuth2\Client\ResultSet\ResultSetInterface;
 
 class CoOrganizer extends AuthenticatedResourceAbstract
 {
     /**
      * Get co-organizers
      *
-     * @param int|string $webinarKey
+     * @param string $webinarKey
      * @return array
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getCoorganizers
      */
-    public function getCoOrganizers($webinarKey): array
+    public function getCoOrganizers(string $webinarKey): ResultSetInterface
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/coorganizers";
-
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers', [
+            'webinarKey' => $webinarKey,
+        ]);
         $request = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
 
     /**
      * Create co-organizers
      *
-     * @param int|string $webinarKey
-     * @param array      $body
+     * @param string $webinarKey
+     * @param array $body
      * @return array
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/createCoorganizers
      */
-    public function createCoOrganizers($webinarKey, array $body): array
+    public function createCoOrganizers(string $webinarKey, array $body): ResultSetInterface
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/coorganizers";
-
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers', [
+            'webinarKey' => $webinarKey
+        ]);
         $request = $this->provider->getAuthenticatedRequest('POST', $url, $this->accessToken, [
             'body' => json_encode($body)
         ]);
-
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
 
     /**
@@ -60,44 +57,39 @@ class CoOrganizer extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/deleteCoorganizer
      */
-    public function deleteCoOrganizer($webinarKey, $coOrganizerKey, bool $external = false)
+    public function deleteCoOrganizer(string $webinarKey, string $coOrganizerKey, bool $external = false): ResultSetInterface
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/coorganizers/{$coOrganizerKey}";
-
-        if ($external) {
-            $url .= "?external=true";
-        }
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers/{coorganizerKey}', [
+            'webinarKey' => $webinarKey,
+            'coorganizerKey' => $coOrganizerKey
+        ], [
+            'external' => $external ? 'true' : 'false'
+        ]);
 
         $request = $this->provider->getAuthenticatedRequest('DELETE', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
 
     /**
      * Resend invitation
      *
-     * @param int|string $webinarKey
-     * @param int|string $coOrganizerKey
-     * @param bool       $external
+     * @param string $webinarKey
+     * @param string $coOrganizerKey
+     * @param bool $external
      * @return array|null
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/resendCoorganizerInvitation
      */
-    public function resendInvitation($webinarKey, $coOrganizerKey, bool $external = false)
+    public function resendInvitation(string $webinarKey, string $coOrganizerKey, bool $external = false): ResultSetInterface
     {
-        $organizerKey = (new AccessTokenDecorator($this->accessToken))->getOrganizerKey();
-
-        $url = "{$this->provider->domain}/G2W/rest/v2/organizers/{$organizerKey}/webinars/{$webinarKey}/coorganizers/{$coOrganizerKey}/resendInvitation";
-
-        if ($external) {
-            $url .= "?external=true";
-        }
-
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers/{coorganizerKey}/resendInvitation', [
+            'webinarKey' => $webinarKey,
+            'coorganizerKey' => $coOrganizerKey
+        ], [
+            'external' => $external ? 'true' : 'false'
+        ]);
         $request = $this->provider->getAuthenticatedRequest('POST', $url, $this->accessToken);
-
-        return $this->provider->getParsedResponse($request);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
 }

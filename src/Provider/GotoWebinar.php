@@ -11,7 +11,6 @@ use League\OAuth2\Client\Tool\RequestFactory;
 use League\OAuth2\Client\Grant\GrantFactory;
 use GuzzleHttp\Client as HttpClient;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
 use DalPraS\OAuth2\Client\Provider\Exception\GotoWebinarProviderException;
 
 /**
@@ -124,7 +123,8 @@ class GotoWebinar extends AbstractProvider
      *
      * @throws IdentityProviderException
      * @param  ResponseInterface $response
-     * @param  string $data Parsed response data
+     * @param  array $data 
+     *      Parsed response data
      * @return void
      */
     protected function checkResponse(ResponseInterface $response, $data)
