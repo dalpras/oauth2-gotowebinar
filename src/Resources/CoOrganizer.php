@@ -71,17 +71,39 @@ class CoOrganizer extends AuthenticatedResourceAbstract
     }
 
     /**
-     * Resend invitation
+     * Resends an invitation email to the specified co-organizer. For external co-organizers 
+     * (individuals who do not have a shared GoToWebinar account), set the URL parameter 'external' = true.
+     * 
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers/{coorganizerKey}/resendInvitation
      *
+     * @deprecated use resendCoOrganizerInvitation
+     * 
      * @param string $webinarKey
      * @param string $coOrganizerKey
      * @param bool $external
-     * @return array|null
      * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/resendCoorganizerInvitation
      */
     public function resendInvitation(string $webinarKey, string $coOrganizerKey, bool $external = false): ResultSetInterface
+    {
+        return $this->resendCoOrganizerInvitation($webinarKey, $coOrganizerKey, $external);
+    }
+
+    /**
+     * Resends an invitation email to the specified co-organizer. For external co-organizers 
+     * (individuals who do not have a shared GoToWebinar account), set the URL parameter 'external' = true.
+     * 
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers/{coorganizerKey}/resendInvitation
+     * 
+     * @param string $webinarKey
+     * @param string $coOrganizerKey
+     * @param bool $external
+     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
+     *
+     * @link https://developer.goto.com/GoToWebinarV2/#operation/resendCoorganizerInvitation
+     */
+    public function resendCoOrganizerInvitation(string $webinarKey, string $coOrganizerKey, bool $external = false): ResultSetInterface
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers/{coorganizerKey}/resendInvitation', [
             'webinarKey' => $webinarKey,
