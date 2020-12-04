@@ -107,6 +107,53 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
     }
 
     /**
+     * Retrieves the meeting times for a webinar.
+     *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinarMeetingTimes
+     *
+     * @param string $webinarKey
+     */
+    public function getWebinarMeetingTimes(string $webinarKey): ResultSetInterface
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/meetingtimes', ['webinarKey' => $webinarKey]);
+        $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
+    }
+
+    /**
+     * Retrieves the audio/conferencing information for a specific webinar.
+     *
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/audio
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getAudioInformation
+     *
+     * @param string $webinarKey
+     */
+    public function getAudioInformation(string $webinarKey): ResultSetInterface
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/audio', ['webinarKey' => $webinarKey]);
+        $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
+    }
+
+    /**
+     * Returns webinars scheduled for the future for the specified organizer and webinars of other organizers 
+     * where the specified organizer is a co-organizer.
+     *
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/insessionWebinars
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getInSessionWebinars
+     *
+     * @param string $webinarKey
+     */
+    public function getInSessionWebinars(): ResultSetInterface
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/insessionWebinars');
+        $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
+    }
+
+    /**
      * Create a new webinar.
      * Return the the WebinarKey.
      *
