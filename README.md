@@ -113,19 +113,16 @@ Interaction with the GoToWebinar API is very easy.
 
     $resWebinar = new \DalPraS\OAuth2\Client\Resources\Webinar($provider, $accessToken);
     try {
-        $data = $resWebinar->getWebinars(new \DateTime('-1 year'), new \DateTime('+1 year'), 0, 10);
+        $data = $resWebinar->getWebinarsByOrganizer(new \DateTime('-1 year'), new \DateTime('+1 year'), 0, 10);
 
-        // or @deprecated, use getWebinars
-        // $data = $resWebinar->getPast(new \DateTime('-1 year'));
+        // or 
+        $data = $resWebinar->getWebinarsByAccount(new \DateTime('-1 year'), new \DateTime('+1 year'), 0, 10);
 
-        // or @deprecated, use getWebinars
-        // $data = $resWebinar->getWebinar('webinarKey');
+        // or 
+        $data = $resWebinar->getWebinar('webinarKey');
 
         // or
         $data = $resWebinar->deleteWebinar('webinarKey');
-
-        // or
-        $data = $resWebinar->getUpcoming();
 
         // or
         // helper for changing timezone to utc

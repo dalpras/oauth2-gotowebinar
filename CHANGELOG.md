@@ -1,6 +1,14 @@
 LogMeIn GoToWebinar Provider for OAuth 2.0 Client
 =================================================
 
+v2.1
+----
+
+- \Resources\Webinar.php
+  - reorganization of getWebinars: getWebinarsByAccount, getWebinarsByOrganizer
+
+
+
 v2.0
 ----
 _Released: 2020-12-02_
