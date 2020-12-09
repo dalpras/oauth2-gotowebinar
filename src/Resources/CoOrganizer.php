@@ -3,7 +3,6 @@
 namespace DalPraS\OAuth2\Client\Resources;
 
 use DalPraS\OAuth2\Client\ResultSet\SimpleResultSet;
-use DalPraS\OAuth2\Client\ResultSet\ResultSetInterface;
 
 class CoOrganizer extends AuthenticatedResourceAbstract
 {
@@ -16,7 +15,7 @@ class CoOrganizer extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getCoorganizers
      */
-    public function getCoOrganizers(string $webinarKey): ResultSetInterface
+    public function getCoOrganizers(string $webinarKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers', [
             'webinarKey' => $webinarKey,
@@ -35,7 +34,7 @@ class CoOrganizer extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/createCoorganizers
      */
-    public function createCoOrganizers(string $webinarKey, array $body): ResultSetInterface
+    public function createCoOrganizers(string $webinarKey, array $body): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers', [
             'webinarKey' => $webinarKey
@@ -57,7 +56,7 @@ class CoOrganizer extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/deleteCoorganizer
      */
-    public function deleteCoOrganizer(string $webinarKey, string $coOrganizerKey, bool $external = false): ResultSetInterface
+    public function deleteCoOrganizer(string $webinarKey, string $coOrganizerKey, bool $external = false): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers/{coorganizerKey}', [
             'webinarKey' => $webinarKey,
@@ -85,7 +84,7 @@ class CoOrganizer extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/resendCoorganizerInvitation
      */
-    public function resendInvitation(string $webinarKey, string $coOrganizerKey, bool $external = false): ResultSetInterface
+    public function resendInvitation(string $webinarKey, string $coOrganizerKey, bool $external = false): SimpleResultSet
     {
         return $this->resendCoOrganizerInvitation($webinarKey, $coOrganizerKey, $external);
     }
@@ -103,7 +102,7 @@ class CoOrganizer extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/resendCoorganizerInvitation
      */
-    public function resendCoOrganizerInvitation(string $webinarKey, string $coOrganizerKey, bool $external = false): ResultSetInterface
+    public function resendCoOrganizerInvitation(string $webinarKey, string $coOrganizerKey, bool $external = false): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/coorganizers/{coorganizerKey}/resendInvitation', [
             'webinarKey' => $webinarKey,
