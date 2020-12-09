@@ -3,11 +3,11 @@
 namespace DalPraS\OAuth2\Client\ResultSet;
 
 /**
- * Class EmbeddedResponse
+ * Class SimpleResultSet
  */
 class SimpleResultSet extends \ArrayObject implements ResultSetInterface
 {
-    
+
     /**
      * Initialize ArrayObject with parsed response from the GoToWebinar 
      * 
@@ -15,6 +15,15 @@ class SimpleResultSet extends \ArrayObject implements ResultSetInterface
      */
     public function __construct($response) {
         parent::__construct( is_array($response) ? $response : [] );
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \JsonSerializable::jsonSerialize()
+     */
+    public function jsonSerialize()
+    {
+        return $this->getArrayCopy();
     }
     
     /**

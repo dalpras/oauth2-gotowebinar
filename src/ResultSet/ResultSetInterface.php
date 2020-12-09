@@ -2,7 +2,7 @@
 
 namespace DalPraS\OAuth2\Client\ResultSet;
 
-interface ResultSetInterface extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
+interface ResultSetInterface extends \IteratorAggregate, \ArrayAccess, \Serializable, \Countable, \JsonSerializable
 {
 
     /**
