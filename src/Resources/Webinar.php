@@ -2,25 +2,44 @@
 
 namespace DalPraS\OAuth2\Client\Resources;
 
-use DalPraS\OAuth2\Client\ResultSet\ResultSetInterface;
 use DalPraS\OAuth2\Client\ResultSet\PageResultSet;
 use DalPraS\OAuth2\Client\ResultSet\SimpleResultSet;
+use DalPraS\OAuth2\Client\Helper\DateUtcHelper;
 
 class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbstract
 {
     /**
-     * Get all webinars.
+     * Get webinars by Account.
      *
-     * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
+     * https://api.getgo.com/G2W/rest/v2/accounts/{accountKey}/webinars
      *
-     * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getAllAccountWebinars
      */
-    public function getWebinars(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): ResultSetInterface
+    public function getWebinarsByAccount(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
     {
-        $utcTimeZone = new \DateTimeZone('UTC');
         $query      = [
-            'fromTime' => ($from ?? new \DateTime('-3 years'))->setTimezone($utcTimeZone)->format('Y-m-d\TH:i:s\Z'),
-            'toTime'   => ($to ?? new \DateTime('+3 years'))->setTimezone($utcTimeZone)->format('Y-m-d\TH:i:s\Z'),
+            'fromTime' => DateUtcHelper::date2utc($from ?? new \DateTime('-3 years')),
+            'toTime'   => DateUtcHelper::date2utc($to ?? new \DateTime('+3 years')),
+            'page'     => $page,
+            'size'     => $size
+        ];
+        $url = $this->getRequestUrl('/accounts/{accountKey}/webinars', [], $query);
+        $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        return new PageResultSet($this->provider->getParsedResponse($request), 'webinars');
+    }
+    
+    /**
+     * Get webinars by Organizer.
+     *
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars
+     *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinars
+     */
+    public function getWebinarsByOrganizer(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
+    {
+        $query      = [
+            'fromTime' => DateUtcHelper::date2utc($from ?? new \DateTime('-3 years')),
+            'toTime'   => DateUtcHelper::date2utc($to ?? new \DateTime('+3 years')),
             'page'     => $page,
             'size'     => $size
         ];
@@ -30,32 +49,44 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
     }
 
     /**
+     * Get webinars by Organizer.
+     *
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars
+     *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinars
+     */
+    public function getWebinars(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
+    {
+        return $this->getWebinarsByOrganizer($from, $to, $page, $size);
+    }
+
+    /**
      * Get upcoming webinars.
      *
-     * @deprecated use getWebinars
+     * @deprecated use getWebinarsByOrganizer
      *
      * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
      */
-    public function getUpcoming(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): ResultSetInterface
+    public function getUpcoming(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
     {
-        return $this->getWebinars($from ?? new \DateTime('now'), $to ?? new \DateTime('+3 years'), $page, $size);
+        return $this->getWebinarsByOrganizer($from ?? new \DateTime('now'), $to ?? new \DateTime('+3 years'), $page, $size);
     }
 
     /**
      * Get webinars in date range.
      *
-     * @deprecated use getWebinars
+     * @deprecated use getWebinarsByOrganizer
      *
      * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
 
      */
-    public function getPast(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): ResultSetInterface
+    public function getPast(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
     {
-        return $this->getWebinars($from ?? new \DateTime('-3 years'), $to ?? new \DateTime('now'), $page, $size);
+        return $this->getWebinarsByOrganizer($from ?? new \DateTime('-3 years'), $to ?? new \DateTime('now'), $page, $size);
     }
 
     /**
@@ -66,9 +97,56 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      *
      * @param string $webinarKey
      */
-    public function getWebinar(string $webinarKey): ResultSetInterface
+    public function getWebinar(string $webinarKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}', ['webinarKey' => $webinarKey]);
+        $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
+    }
+
+    /**
+     * Retrieves the meeting times for a webinar.
+     *
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinarMeetingTimes
+     *
+     * @param string $webinarKey
+     */
+    public function getWebinarMeetingTimes(string $webinarKey): SimpleResultSet
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/meetingtimes', ['webinarKey' => $webinarKey]);
+        $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
+    }
+
+    /**
+     * Retrieves the audio/conferencing information for a specific webinar.
+     *
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/audio
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getAudioInformation
+     *
+     * @param string $webinarKey
+     */
+    public function getAudioInformation(string $webinarKey): SimpleResultSet
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/audio', ['webinarKey' => $webinarKey]);
+        $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
+        return new SimpleResultSet($this->provider->getParsedResponse($request));
+    }
+
+    /**
+     * Returns webinars scheduled for the future for the specified organizer and webinars of other organizers 
+     * where the specified organizer is a co-organizer.
+     *
+     * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/insessionWebinars
+     * 
+     * @link https://developer.goto.com/GoToWebinarV2#operation/getInSessionWebinars
+     *
+     * @param string $webinarKey
+     */
+    public function getInSessionWebinars(): SimpleResultSet
+    {
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/insessionWebinars');
         $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
         return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
@@ -79,7 +157,7 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/createWebinar
      */
-    public function createWebinar(array $body = []): ResultSetInterface
+    public function createWebinar(array $body = []): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars');
         $request  = $this->provider->getAuthenticatedRequest('POST', $url, $this->accessToken, [
@@ -96,7 +174,7 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * @param string $webinarKey
      * @param array $body
      */
-    public function updateWebinar(string $webinarKey, array $body = []): ResultSetInterface
+    public function updateWebinar(string $webinarKey, array $body = []): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}', ['webinarKey' => $webinarKey]);
         $request  = $this->provider->getAuthenticatedRequest('PUT', $url, $this->accessToken, [
@@ -114,7 +192,7 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * @param string $webinarKey
      * @return void
      */
-    public function deleteWebinar($webinarKey, $sendEmail = false): ResultSetInterface
+    public function deleteWebinar($webinarKey, $sendEmail = false): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}', ['webinarKey' => $webinarKey], ['sendCancellationEmails' => $sendEmail]);
         $request  = $this->provider->getAuthenticatedRequest('DELETE', $url, $this->accessToken);

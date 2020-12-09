@@ -3,7 +3,7 @@
 namespace DalPraS\OAuth2\Client\ResultSet;
 
 /**
- * Class PagedResponse
+ * Class PageResultSet
  */
 class PageResultSet implements ResultSetInterface
 {
@@ -33,6 +33,15 @@ class PageResultSet implements ResultSetInterface
         $this->page = new \ArrayObject($response['page'] ?? []);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \JsonSerializable::jsonSerialize()
+     */
+    public function jsonSerialize()
+    {
+        return $this->data->getArrayCopy();
+    }
+    
     /**
      * @return \ArrayObject
      */

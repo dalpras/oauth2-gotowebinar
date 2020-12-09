@@ -1,6 +1,31 @@
 LogMeIn GoToWebinar Provider for OAuth 2.0 Client
 =================================================
 
+v3.0
+----
+_Released: 2020-12-09_
+
+Potential break change: DateUtcHelper is static
+
+- \Resources\Webinar.php
+  - reorganization of getWebinars: 
+    - added getWebinarsByAccount, 
+    - added getWebinarsByOrganizer
+    - getAudioInformation, 
+    - getInSessionWebinars
+- \Resources\CoOrganizer.php
+  - deprecated resendInvitation 
+  - added resendCoorganizerInvitation
+- \Resources\Registrant.php
+  - added getRegistrationFields
+  - added $resendConfirmation in createRegistrant
+- \ResultSet\ResultSetInterface.php 
+  - implements JsonSerializable 
+- new \Resources\Webhook.php
+- \Helper\DateUtcHelper.php 
+  - is now static
+- \Resources now return SimpleResult or PageResult as return type
+
 v2.0
 ----
 _Released: 2020-12-02_

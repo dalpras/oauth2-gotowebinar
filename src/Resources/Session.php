@@ -2,9 +2,9 @@
 
 namespace DalPraS\OAuth2\Client\Resources;
 
-use DalPraS\OAuth2\Client\ResultSet\ResultSetInterface;
 use DalPraS\OAuth2\Client\ResultSet\PageResultSet;
 use DalPraS\OAuth2\Client\ResultSet\SimpleResultSet;
+use DalPraS\OAuth2\Client\Helper\DateUtcHelper;
 
 class Session extends AuthenticatedResourceAbstract
 {
@@ -20,12 +20,11 @@ class Session extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getOrganizerSessions
      */
-    public function getSessions(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): ResultSetInterface
+    public function getSessions(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
     {
-        $utcTimeZone = new \DateTimeZone('UTC');
         $query = [
-            'fromTime' => ($from ?? new \DateTime('-3 years'))->setTimezone($utcTimeZone)->format('Y-m-d\TH:i:s\Z'),
-            'toTime'   => ($to ?? new \DateTime('+3 years'))->setTimezone($utcTimeZone)->format('Y-m-d\TH:i:s\Z'),
+            'fromTime' => DateUtcHelper::date2utc($from ?? new \DateTime('-3 years')),
+            'toTime'   => DateUtcHelper::date2utc($to ?? new \DateTime('+3 years')),
             'page'     => $page,
             'size'     => $size
         ];
@@ -46,7 +45,7 @@ class Session extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAllSessions
      */
-    public function getWebinarSessions(string $webinarKey, int $page = 0, int $size = 100): ResultSetInterface
+    public function getWebinarSessions(string $webinarKey, int $page = 0, int $size = 100): PageResultSet
     {
         $query = [
             'page' => $page,
@@ -67,7 +66,7 @@ class Session extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinarSession
      */
-    public function getWebinarSession(string $webinarKey, string $sessionKey): ResultSetInterface
+    public function getWebinarSession(string $webinarKey, string $sessionKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}', [
             'webinarKey' => $webinarKey,
@@ -87,7 +86,7 @@ class Session extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getPerformance
      */
-    public function getSessionPerformance(string $webinarKey, string $sessionKey): ResultSetInterface
+    public function getSessionPerformance(string $webinarKey, string $sessionKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/performance', [
             'webinarKey' => $webinarKey,
@@ -107,7 +106,7 @@ class Session extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getPolls
      */
-    public function getSessionPolls(string $webinarKey, string $sessionKey): ResultSetInterface
+    public function getSessionPolls(string $webinarKey, string $sessionKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/polls', [
             'webinarKey' => $webinarKey,
@@ -127,7 +126,7 @@ class Session extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getQuestions
      */
-    public function getSessionQuestions(string $webinarKey, string $sessionKey): ResultSetInterface
+    public function getSessionQuestions(string $webinarKey, string $sessionKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/questions', [
             'webinarKey' => $webinarKey,
@@ -147,7 +146,7 @@ class Session extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getSurveys
      */
-    public function getSessionSurveys(string $webinarKey, string $sessionKey): ResultSetInterface
+    public function getSessionSurveys(string $webinarKey, string $sessionKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/surveys', [
             'webinarKey' => $webinarKey,

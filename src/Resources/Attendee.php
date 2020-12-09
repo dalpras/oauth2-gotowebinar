@@ -3,7 +3,6 @@
 namespace DalPraS\OAuth2\Client\Resources;
 
 use DalPraS\OAuth2\Client\ResultSet\SimpleResultSet;
-use DalPraS\OAuth2\Client\ResultSet\ResultSetInterface;
 
 class Attendee extends AuthenticatedResourceAbstract
 {
@@ -17,7 +16,7 @@ class Attendee extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendees
      */
-    public function getSessionAttendees(string $webinarKey, string $sessionKey): ResultSetInterface
+    public function getSessionAttendees(string $webinarKey, string $sessionKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/attendees', [
             'webinarKey' => $webinarKey,
@@ -38,7 +37,7 @@ class Attendee extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendee
      */
-    public function getAttendee(string $webinarKey, string $sessionKey, string $registrantKey): ResultSetInterface
+    public function getAttendee(string $webinarKey, string $sessionKey, string $registrantKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/attendees/{registrantKey}', [
             'webinarKey' => $webinarKey,
@@ -60,7 +59,7 @@ class Attendee extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeePollAnswers
      */
-    public function getAttendeePollAnswers(string $webinarKey, string $sessionKey, string $registrantKey): ResultSetInterface
+    public function getAttendeePollAnswers(string $webinarKey, string $sessionKey, string $registrantKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/attendees/{registrantKey}/polls', [
             'webinarKey' => $webinarKey,
@@ -82,7 +81,7 @@ class Attendee extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeeQuestions
      */
-    public function getAttendeeQuestions(string $webinarKey, string $sessionKey, string $registrantKey): ResultSetInterface
+    public function getAttendeeQuestions(string $webinarKey, string $sessionKey, string $registrantKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/attendees/{registrantKey}/questions', [
             'webinarKey' => $webinarKey,
@@ -104,7 +103,7 @@ class Attendee extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeeSurveyAnswers
      */
-    public function getAttendeeSurveyAnswers(string $webinarKey, string $sessionKey, string $registrantKey): ResultSetInterface
+    public function getAttendeeSurveyAnswers(string $webinarKey, string $sessionKey, string $registrantKey): SimpleResultSet
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/sessions/{sessionKey}/attendees/{registrantKey}/surveys', [
             'webinarKey' => $webinarKey,

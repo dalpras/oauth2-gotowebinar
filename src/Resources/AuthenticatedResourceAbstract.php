@@ -4,7 +4,6 @@ namespace DalPraS\OAuth2\Client\Resources;
 
 use DalPraS\OAuth2\Client\Provider\GotoWebinar;
 use League\OAuth2\Client\Token\AccessToken;
-use DalPraS\OAuth2\Client\ResultSet\ResultSetInterface;
 use DalPraS\OAuth2\Client\Decorators\AccessTokenDecorator;
 
 abstract class AuthenticatedResourceAbstract {
