@@ -9,7 +9,7 @@ class DateUtcHelper
      * @param \DateTime $dateTime Local datetime
      * @return string
      */
-    public static function date2utc(\DateTime $dateTime) : string {
+    public static function date2utc(\DateTimeInterface $dateTime) : string {
         return $dateTime->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d\TH:i:s\Z');
     }
 
