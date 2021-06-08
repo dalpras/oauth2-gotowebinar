@@ -169,7 +169,8 @@ Interaction with the GoToWebinar API is very easy.
 
 ### Using Storage
 
-Storage has been introduced for storing Organizer's accessTokens in a repository (only \Redis has been implemented).  ResourceLoader use this repository to perform GotoWebinar information access in an easy way.
+Storage has been introduced for storing Organizer's accessTokens in a repository (only \Redis has been implemented).  
+ResourceLoader use this repository to perform GotoWebinar information access in an easy way.
 With this feature registrants can subscribe to a course using the accessToken stored by Organizers in the repository.  
 ResourceLoader manage the data in a centralized way.
 
