@@ -75,7 +75,7 @@ class ResourceLoader {
      * Get the ResourceOwner using the storage with the OrganizerKey param.
      *
      * @param string $organizerKey
-     * @return \DalPraS\OAuth2\Client\Resources\Registrant|NULL
+     * @return \DalPraS\OAuth2\Client\Provider\GotoWebinarResourceOwner|NULL
      */
     public function getResourceOwner(string $organizerKey) {
         $accessToken = $this->refreshToken($this->storage->fetchToken($organizerKey));

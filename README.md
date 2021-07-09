@@ -34,6 +34,9 @@ $provider = new \DalPraS\OAuth2\Client\Provider\GotoWebinar([
     ])
 ]);
 
+$redis = new \Redis();
+$redis->connect($host, $port);
+
 if (!isset($_GET['code'])) {
 
     // If we don't have an authorization code then get one
@@ -55,6 +58,10 @@ if (!isset($_GET['code'])) {
     $token = $provider->getAccessToken('authorization_code', [
         'code' => $_GET['code']
     ]);
+
+    // Saved token in redis for future usage.
+    $g2wstorage = new \DalPraS\OAuth2\Client\Storage\RedisTokenStorage($redis);
+    $g2wstorage->saveToken($accessToken);
 
     // Optional: Now you have a token you can look up a users profile data
     try {
@@ -103,15 +110,30 @@ if (!isset($_GET['code'])) {
 Interaction with the GoToWebinar API is very easy.
 
 ```php
+
+    ...
+
     $provider = new \DalPraS\OAuth2\Client\Provider\GotoWebinar([
         'clientId'                => 'demoapp',    // The client ID assigned to you by the provider
         'clientSecret'            => 'demopass',   // The client password assigned to you by the provider
         'redirectUri'             => 'http://example.com/your-redirect-url/',
     ]);
 
-    $accessToken = getAccessTokenFromYourDataStore();
+    // You can get the Resources using a previously stored (in redis) AccessToken
+    // The ResourceLoader handle the AccessToken loading for you 
+    $g2wstorage = new \DalPraS\OAuth2\Client\Storage\RedisTokenStorage($redis);
+    $loader = new \DalPraS\OAuth2\Client\Loader\ResourceLoader($g2wstorage, $provider);
 
-    $resWebinar = new \DalPraS\OAuth2\Client\Resources\Webinar($provider, $accessToken);
+    /* @var $resWebinar \DalPraS\OAuth2\Client\Resources\Webinar */
+    $resWebinar = $loader->getWebinarResource($organizerKey);
+
+    /* @var $resWebinar \DalPraS\OAuth2\Client\Resources\Webinar */
+    $resRegistrant = $loader->getRegistrantResource($organizerKey);
+
+    // ... or if you just had the AccessToken in your hands, instance the Resources needed: 
+    // $resWebinar = new \DalPraS\OAuth2\Client\Resources\Webinar($provider, $accessToken);
+    // $resRegistrant = new \DalPraS\OAuth2\Client\Resources\Registrant($provider, $accessToken);
+
     try {
         $data = $resWebinar->getWebinarsByOrganizer(new \DateTime('-1 year'), new \DateTime('+1 year'), 0, 10);
 
