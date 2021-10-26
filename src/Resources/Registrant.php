@@ -99,9 +99,12 @@ class Registrant extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceA
      * 
      * @link https://developer.goto.com/GoToWebinarV2#operation/getRegistrationFields
      */
-    public function getRegistrationFields(): SimpleResultSet 
+    public function getRegistrationFields(string $webinarKey, string $organizerKey): SimpleResultSet 
     {
-        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/registrants/fields');
+        $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}/registrants/fields',[
+            'webinarKey' => $webinarKey,
+            'organizerKey' => $organizerKey
+        ]);
         $request  = $this->provider->getAuthenticatedRequest('GET', $url, $this->accessToken);
         return new SimpleResultSet($this->provider->getParsedResponse($request));
     }
