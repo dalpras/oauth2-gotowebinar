@@ -4,14 +4,14 @@ namespace DalPraS\OAuth2\Client\Storage;
 class RedisTokenStorage implements TokenStorageInterface {
     
     /**
-     * @var \Redis
+     * @var \Redis|\Predis\Client 
      */
     private $redis;
     
     /**
-     * @param \Redis $redis
+     * @param \Redis|\Predis\Client $redis
      */
-    public function __construct(\Redis $redis) {
+    public function __construct($redis) {
         $this->redis = $redis;
     }
  
