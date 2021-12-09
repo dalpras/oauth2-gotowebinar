@@ -1,6 +1,8 @@
 <?php
 namespace DalPraS\OAuth2\Client\Storage;
 
+use function GuzzleHttp\json_encode;
+
 class RedisTokenStorage implements TokenStorageInterface {
     
     /**
@@ -26,7 +28,7 @@ class RedisTokenStorage implements TokenStorageInterface {
         $id = sprintf(self::STORAGE_DOMAIN, $organizerKey);
         // controllo che il token sia stato salvato in redis
         if ($this->redis->exists($id)) {
-            $data = $this->redis->get($id);
+            $data = \json_decode($this->redis->get($id), true);
             if ( !empty($data) ) {
                 return new \League\OAuth2\Client\Token\AccessToken($data);
             }
@@ -46,7 +48,7 @@ class RedisTokenStorage implements TokenStorageInterface {
         $id = sprintf(self::STORAGE_DOMAIN, $organizerKey);
         
         // Store token for future usage
-        $this->redis->set($id, $accessToken->jsonSerialize());
+        $this->redis->set($id, \json_encode($accessToken->jsonSerialize()));
         $this->redis->expireAt($id, time() + (86400 * 365));
         return $this;
     }
