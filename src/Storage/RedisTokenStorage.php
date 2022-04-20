@@ -22,6 +22,7 @@ class RedisTokenStorage implements TokenStorageInterface {
      * Viene usato l'accessToken corrispondente all'organizerKey settato.
      *
      * @see \DalPraS\OAuth2\Client\Storage\TokenStorageInterface::fetchToken()
+     * @param string $organizerKey
      * @return \League\OAuth2\Client\Token\AccessToken|NULL
      */
     public function fetchToken(string $organizerKey) {
