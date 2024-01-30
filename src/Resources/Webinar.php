@@ -151,10 +151,11 @@ class Webinar extends AuthenticatedResourceAbstract
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/cancelWebinar
      */
-    public function deleteWebinar($webinarKey, $sendEmail = false): SimpleResultSet
+    public function deleteWebinar($webinarKey, $sendEmail = false): bool
     {
         $url = $this->getRequestUrl('/organizers/{organizerKey}/webinars/{webinarKey}', ['webinarKey' => $webinarKey], ['sendCancellationEmails' => $sendEmail]);
         $request  = $this->provider->getAuthenticatedRequest('DELETE', $url, $this->accessToken);
-        return new SimpleResultSet($this->provider->getParsedResponse($request));
+        $this->provider->getResponse($request);
+        return true;
     }
 }
