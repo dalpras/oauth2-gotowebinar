@@ -18,13 +18,14 @@
 		"logmeinic"
 	],
 	"require" : {
-		"league/oauth2-client" : "^2.0",
-		"php" : ">=7.2.0",
+		"php" : ">=8.2.0",
+		"league/oauth2-client" : "^2.7.0",
 		"ext-json" : "*"
 	},
 	"require-dev" : {
-		"mockery/mockery" : "^1.2",
-		"phpunit/phpunit" : "^8"
+		"mockery/mockery" : "^1.6.7",
+		"phpunit/phpunit" : "^10.5.9",
+		"predis/predis": "^2.2"
 	},
 	"autoload" : {
 		"psr-4" : {

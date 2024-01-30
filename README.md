@@ -59,18 +59,18 @@ if (!isset($_GET['code'])) {
         'code' => $_GET['code']
     ]);
 
-    // Saved token in redis for future usage.
-    $g2wstorage = new \DalPraS\OAuth2\Client\Storage\RedisTokenStorage($redis);
-    $g2wstorage->saveToken($accessToken);
-
-    // Optional: Now you have a token you can look up a users profile data
     try {
-
         // We got an access token, let's now get the user's details
-        $user = $provider->getResourceOwner($token);
+        $owner = $provider->getResourceOwner($token);
+
+        // Saved token in redis for future usage.
+        $g2wstorage = new \DalPraS\OAuth2\Client\Storage\RedisTokenStorage($redis);
+        $g2wstorage->saveToken($accessToken, $owner);
+
+        // Optional: Now you have a token you can look up a users profile data
 
         // Use these details to create a new profile
-        printf('Hello %s!', $user->getNickname());
+        printf('Hello %s!', $owner->getNickname());
 
     } catch (GotoWebinarProviderException $e) {
         return $e->generateHttpResponse(new \Zend\Diactoros\Response());

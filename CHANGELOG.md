@@ -1,6 +1,27 @@
 LogMeIn GoToWebinar Provider for OAuth 2.0 Client
 =================================================
 
+v4.0
+----
+_Released: 2024-01-29_
+
+Break changes:
+- strict_type for each php file allow more efficient compilation
+- upgrade min php version to 8.2
+- drop AccessTokenDecorator that's because accessToken haven't anymore informations about owner
+- saveToken has different signature, because because accessToken haven't anymore informations about owner
+- drop @param comments datatypes, now using methods signature
+
+Improvements:
+- break Redis Storage in two files: 
+  - PredisTokenStorage for Predis
+  - RedisTokenStorate for Redis
+- Provider\GotoWebinar
+  - domainAuth for new authorization mechanism as in "https://developer.goto.com/guides/Authentication/New_Token_Retrieval_Migration_Guide/"
+- Resources\Webinar
+  - drop @deprecated getUpcoming()
+  - drop @deprecated getPast()
+
 v3.0
 ----
 _Released: 2020-12-09_

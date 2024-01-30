@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
->
-    <!-- <logging>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="vendor/autoload.php" colors="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false">
+  <!-- <logging>
         <log type="coverage-html"
                 target="./build/coverage/html"
                 charset="UTF-8"
@@ -19,18 +10,18 @@
           <log type="coverage-clover"
                 target="./build/coverage/log/coverage.xml"/>
     </logging> -->
-    <testsuites>
-        <testsuite name="Package Test Suite">
-            <directory suffix=".php">./test/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./</directory>
-            <exclude>
-                <directory suffix=".php">./vendor</directory>
-                <directory suffix=".php">./test</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+  <testsuites>
+    <testsuite name="Package Test Suite">
+      <directory suffix=".php">./test/</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">./</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">./vendor</directory>
+      <directory suffix=".php">./test</directory>
+    </exclude>
+  </source>
 </phpunit>
