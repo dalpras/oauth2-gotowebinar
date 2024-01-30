@@ -9,10 +9,10 @@ class GotoWebinarProviderException extends IdentityProviderException
 {
     public function __construct(
         string $message, 
-        private int $code, 
+        protected int $httpStatusCode, 
         mixed $body
     ) {
-        parent::__construct($message, $code, $body);
+        parent::__construct($message, $httpStatusCode, $body);
     }
 
     /**
@@ -75,6 +75,6 @@ class GotoWebinarProviderException extends IdentityProviderException
      */
     public function getHttpStatusCode(): int
     {
-        return $this->code;
+        return $this->httpStatusCode;
     }
 }
