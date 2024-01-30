@@ -1,36 +1,27 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace DalPraS\OAuth2\Client\ResultSet;
 
-/**
- * Class PageResultSet
- */
+use ArrayObject;
+use Traversable;
+
 class PageResultSet implements ResultSetInterface
 {
     /**
      * Data stored in the page.
-     *
-     * @var \ArrayObject
      */
-    private $data;
+    private ArrayObject $data;
 
     /**
      * Page information
-     *
-     * @var \ArrayObject
      */
-    private $page;
+    private ArrayObject $page;
 
-    /**
-     * @param array|null $response
-     * @param string $type
-     * @throws \InvalidArgumentException
-     */
-    public function __construct($response, $type)
+    public function __construct(?array $response, string $type)
     {
         $response = is_array($response) ? $response : [];
-        $this->data = new \ArrayObject($response['_embedded'][$type] ?? []);
-        $this->page = new \ArrayObject($response['page'] ?? []);
+        $this->data = new ArrayObject($response['_embedded'][$type] ?? []);
+        $this->page = new ArrayObject($response['page'] ?? []);
     }
 
     /**
@@ -42,18 +33,12 @@ class PageResultSet implements ResultSetInterface
         return $this->data->getArrayCopy();
     }
     
-    /**
-     * @return \ArrayObject
-     */
-    public function getData(): \ArrayObject
+    public function getData(): ArrayObject
     {
         return $this->data;
     }
 
-    /**
-     * @return \ArrayObject
-     */
-    public function getPage(): \ArrayObject
+    public function getPage(): ArrayObject
     {
         return $this->page;
     }
@@ -62,7 +47,7 @@ class PageResultSet implements ResultSetInterface
      * {@inheritDoc}
      * @see \Countable::count()
      */
-    public function count()
+    public function count(): int
     {
         return $this->data->count();
     }
@@ -71,7 +56,7 @@ class PageResultSet implements ResultSetInterface
      * {@inheritDoc}
      * @see \ArrayAccess::offsetExists()
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->data->offsetExists($offset);
     }
@@ -89,7 +74,7 @@ class PageResultSet implements ResultSetInterface
      * {@inheritDoc}
      * @see \ArrayAccess::offsetSet()
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->data->offsetSet($offset, $value);
     }
@@ -98,7 +83,7 @@ class PageResultSet implements ResultSetInterface
      * {@inheritDoc}
      * @see \ArrayAccess::offsetUnset()
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->data->offsetUnset($offset);
     }
@@ -107,9 +92,9 @@ class PageResultSet implements ResultSetInterface
      * {@inheritDoc}
      * @see \Serializable::serialize()
      */
-    public function serialize()
+    public function serialize(): string
     {
-        return (new \ArrayObject([
+        return (new ArrayObject([
             'data' => $this->data->getArrayCopy(),
             'page' => $this->page->getArrayCopy()
         ]))->serialize();
@@ -119,19 +104,19 @@ class PageResultSet implements ResultSetInterface
      * {@inheritDoc}
      * @see \Serializable::unserialize()
      */
-    public function unserialize($serialized)
+    public function unserialize(string $serialized)
     {
-        $response = new \ArrayObject();
+        $response = new ArrayObject();
         $response->unserialize($serialized);
-        $this->data = new \ArrayObject($response['data']);
-        $this->page = new \ArrayObject($response['page']);
+        $this->data = new ArrayObject($response['data']);
+        $this->page = new ArrayObject($response['page']);
     }
 
     /**
      * {@inheritDoc}
      * @see \IteratorAggregate::getIterator()
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return $this->data->getIterator();
     }
