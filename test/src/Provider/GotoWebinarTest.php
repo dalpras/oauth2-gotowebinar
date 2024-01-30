@@ -3,14 +3,15 @@
 namespace League\OAuth2\Client\Test\Provider;
 
 use DalPraS\OAuth2\Client\Provider\GotoWebinar;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Stream;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class GotoWebinarTest extends TestCase
 {
-    protected $provider;
+    protected GotoWebinar $provider;
 
     protected function setUp(): void
     {
@@ -57,7 +58,7 @@ class GotoWebinarTest extends TestCase
         $url = $this->provider->getAuthorizationUrl();
         $uri = parse_url($url);
 
-        $this->assertEquals('/oauth/v2/authorize', $uri['path']);
+        $this->assertEquals('/oauth/authorize', $uri['path']);
     }
 
     public function testGetBaseAccessTokenUrl(): void
@@ -67,13 +68,15 @@ class GotoWebinarTest extends TestCase
         $url = $this->provider->getBaseAccessTokenUrl($params);
         $uri = parse_url($url);
 
-        $this->assertEquals('/oauth/v2/token', $uri['path']);
+        $this->assertEquals('/oauth/token', $uri['path']);
     }
 
     public function testGetAccessToken(): void
     {
+        $testBodyFor = '{"access_token":"mock_access_token", "scope":"repo,gist", "token_type":"bearer"}';
+        
         $response = m::mock(ResponseInterface::class);
-        $response->shouldReceive('getBody')->andReturn('{"access_token":"mock_access_token", "scope":"repo,gist", "token_type":"bearer"}');
+        $response->shouldReceive('getBody')->andReturn(new Stream(fopen('data://text/plain,' . $testBodyFor, 'r')));
         $response->shouldReceive('getHeader')->andReturn(['content-type' => 'json']);
         $response->shouldReceive('getStatusCode')->andReturn(200);
 
@@ -92,10 +95,10 @@ class GotoWebinarTest extends TestCase
     public function testGotoWebinarEnterpriseDomainUrls(): void
     {
         $this->provider->domain = 'https://my.company.com';
-
+        $testBodyFor = 'access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token&otherKey={1234}';
 
         $response = m::mock(ResponseInterface::class);
-        $response->shouldReceive('getBody')->times(1)->andReturn('access_token=mock_access_token&expires=3600&refresh_token=mock_refresh_token&otherKey={1234}');
+        $response->shouldReceive('getBody')->times(1)->andReturn(new Stream(fopen('data://text/plain,' . $testBodyFor, 'r')));
         $response->shouldReceive('getHeader')->andReturn(['content-type' => 'application/x-www-form-urlencoded']);
         $response->shouldReceive('getStatusCode')->andReturn(200);
 
@@ -105,9 +108,8 @@ class GotoWebinarTest extends TestCase
 
         $token = $this->provider->getAccessToken('authorization_code', ['code' => 'mock_authorization_code']);
 
-        $this->assertEquals($this->provider->domain.'/oauth/v2/authorize', $this->provider->getBaseAuthorizationUrl());
-        $this->assertEquals($this->provider->domain.'/oauth/v2/token', $this->provider->getBaseAccessTokenUrl([]));
-        $this->assertEquals($this->provider->domain.'/admin/rest/v1/me', $this->provider->getResourceOwnerDetailsUrl($token));
-        //$this->assertEquals($this->provider->domain.'/api/v3/user/emails', $this->provider->urlUserEmails($token));
+        $this->assertEquals($this->provider->domainAuth . '/oauth/authorize', $this->provider->getBaseAuthorizationUrl());
+        $this->assertEquals($this->provider->domainAuth . '/oauth/token', $this->provider->getBaseAccessTokenUrl([]));
+        $this->assertEquals($this->provider->domain . '/admin/rest/v1/me', $this->provider->getResourceOwnerDetailsUrl($token));
     }
 }
