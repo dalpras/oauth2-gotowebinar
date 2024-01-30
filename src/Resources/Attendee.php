@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace DalPraS\OAuth2\Client\Resources;
 
@@ -8,11 +8,6 @@ class Attendee extends AuthenticatedResourceAbstract
 {
     /**
      * Get session attendees
-     *
-     * @param string $webinarKey
-     * @param string $sessionKey
-     * @return array
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendees
      */
@@ -28,12 +23,6 @@ class Attendee extends AuthenticatedResourceAbstract
 
     /**
      * Get attendee
-     *
-     * @param string $webinarKey
-     * @param string $sessionKey
-     * @param string $registrantKey
-     * @return array
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendee
      */
@@ -51,12 +40,6 @@ class Attendee extends AuthenticatedResourceAbstract
     /**
      * Get attendee poll answers
      *
-     * @param string $webinarKey
-     * @param string $sessionKey
-     * @param string $registrantKey
-     * @return array
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
-     *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeePollAnswers
      */
     public function getAttendeePollAnswers(string $webinarKey, string $sessionKey, string $registrantKey): SimpleResultSet
@@ -73,12 +56,6 @@ class Attendee extends AuthenticatedResourceAbstract
     /**
      * Get attendee questions
      *
-     * @param string $webinarKey
-     * @param string $sessionKey
-     * @param string $registrantKey
-     * @return array
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
-     *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeeQuestions
      */
     public function getAttendeeQuestions(string $webinarKey, string $sessionKey, string $registrantKey): SimpleResultSet
@@ -94,12 +71,6 @@ class Attendee extends AuthenticatedResourceAbstract
 
     /**
      * Get attendee survey answers
-     *
-     * @param string $webinarKey
-     * @param string $sessionKey
-     * @param string $registrantKey
-     * @return array
-     * @throws \League\OAuth2\Client\Provider\Exception\IdentityProviderException
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getAttendeeSurveyAnswers
      */

@@ -1,12 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace DalPraS\OAuth2\Client\Resources;
 
+use DalPraS\OAuth2\Client\Helper\DateUtcHelper;
+use DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbstract;
 use DalPraS\OAuth2\Client\ResultSet\PageResultSet;
 use DalPraS\OAuth2\Client\ResultSet\SimpleResultSet;
-use DalPraS\OAuth2\Client\Helper\DateUtcHelper;
+use DateTime;
 
-class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbstract
+class Webinar extends AuthenticatedResourceAbstract
 {
     /**
      * Get webinars by Account.
@@ -15,11 +17,11 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/getAllAccountWebinars
      */
-    public function getWebinarsByAccount(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
+    public function getWebinarsByAccount(?DateTime $from = null, ?DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
     {
         $query      = [
-            'fromTime' => DateUtcHelper::date2utc($from ?? new \DateTime('-3 years')),
-            'toTime'   => DateUtcHelper::date2utc($to ?? new \DateTime('+3 years')),
+            'fromTime' => DateUtcHelper::date2utc($from ?? new DateTime('-3 years')),
+            'toTime'   => DateUtcHelper::date2utc($to ?? new DateTime('+3 years')),
             'page'     => $page,
             'size'     => $size
         ];
@@ -35,11 +37,11 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinars
      */
-    public function getWebinarsByOrganizer(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
+    public function getWebinarsByOrganizer(?DateTime $from = null, ?DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
     {
         $query      = [
-            'fromTime' => DateUtcHelper::date2utc($from ?? new \DateTime('-3 years')),
-            'toTime'   => DateUtcHelper::date2utc($to ?? new \DateTime('+3 years')),
+            'fromTime' => DateUtcHelper::date2utc($from ?? new DateTime('-3 years')),
+            'toTime'   => DateUtcHelper::date2utc($to ?? new DateTime('+3 years')),
             'page'     => $page,
             'size'     => $size
         ];
@@ -55,38 +57,9 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinars
      */
-    public function getWebinars(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
+    public function getWebinars(?DateTime $from = null, ?DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
     {
         return $this->getWebinarsByOrganizer($from, $to, $page, $size);
-    }
-
-    /**
-     * Get upcoming webinars.
-     *
-     * @deprecated use getWebinarsByOrganizer
-     *
-     * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
-     *
-     * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
-     */
-    public function getUpcoming(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
-    {
-        return $this->getWebinarsByOrganizer($from ?? new \DateTime('now'), $to ?? new \DateTime('+3 years'), $page, $size);
-    }
-
-    /**
-     * Get webinars in date range.
-     *
-     * @deprecated use getWebinarsByOrganizer
-     *
-     * https://api.getgo.com/G2W/rest/v2/account/{accountKey}/webinars?page=0&size=20
-     *
-     * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinars
-
-     */
-    public function getPast(?\DateTime $from = null, ?\DateTime $to = null, int $page = 0, int $size = 100): PageResultSet
-    {
-        return $this->getWebinarsByOrganizer($from ?? new \DateTime('-3 years'), $to ?? new \DateTime('now'), $page, $size);
     }
 
     /**
@@ -94,8 +67,6 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * in GotoWebinar's terms webinarKey.
      *
      * @link https://developer.goto.com/GoToWebinarV2/#operation/getWebinar
-     *
-     * @param string $webinarKey
      */
     public function getWebinar(string $webinarKey): SimpleResultSet
     {
@@ -108,8 +79,6 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * Retrieves the meeting times for a webinar.
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/getWebinarMeetingTimes
-     *
-     * @param string $webinarKey
      */
     public function getWebinarMeetingTimes(string $webinarKey): SimpleResultSet
     {
@@ -124,8 +93,6 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}/audio
      * 
      * @link https://developer.goto.com/GoToWebinarV2#operation/getAudioInformation
-     *
-     * @param string $webinarKey
      */
     public function getAudioInformation(string $webinarKey): SimpleResultSet
     {
@@ -141,8 +108,6 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/insessionWebinars
      * 
      * @link https://developer.goto.com/GoToWebinarV2#operation/getInSessionWebinars
-     *
-     * @param string $webinarKey
      */
     public function getInSessionWebinars(): SimpleResultSet
     {
@@ -170,9 +135,6 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * Update an existing webinar.
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/updateWebinar
-     *
-     * @param string $webinarKey
-     * @param array $body
      */
     public function updateWebinar(string $webinarKey, array $body = []): SimpleResultSet
     {
@@ -188,9 +150,6 @@ class Webinar extends \DalPraS\OAuth2\Client\Resources\AuthenticatedResourceAbst
      * https://api.getgo.com/G2W/rest/v2/organizers/{organizerKey}/webinars/{webinarKey}?sendCancellationEmails=false
      *
      * @link https://developer.goto.com/GoToWebinarV2#operation/cancelWebinar
-     *
-     * @param string $webinarKey
-     * @return void
      */
     public function deleteWebinar($webinarKey, $sendEmail = false): SimpleResultSet
     {
