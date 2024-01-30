@@ -4,12 +4,12 @@ namespace DalPraS\OAuth2\Client\Storage;
 
 use DalPraS\OAuth2\Client\Provider\GotoWebinarResourceOwner;
 use League\OAuth2\Client\Token\AccessToken;
-use Redis;
+use Predis\Client as PredisClient;
 
-class RedisTokenStorage implements TokenStorageInterface 
+class PredisTokenStorage implements TokenStorageInterface 
 {
     public function __construct(
-        private Redis $redis
+        private PredisClient $redis
     ) {}
  
     /**
@@ -36,7 +36,7 @@ class RedisTokenStorage implements TokenStorageInterface
     {
         // Store token for future usage
         $redisKey = self::PREFIX . $owner->getKey();
-        $this->redis->set($redisKey , json_encode($accessToken->jsonSerialize()));
+        $this->redis->set($redisKey, json_encode($accessToken->jsonSerialize()));
         $this->redis->expireAt($redisKey, time() + $seconds);
         return $this;
     }

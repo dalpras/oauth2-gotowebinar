@@ -1,28 +1,26 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace DalPraS\OAuth2\Client\Storage;
 
-interface TokenStorageInterface {
-    
+use DalPraS\OAuth2\Client\Provider\GotoWebinarResourceOwner;
+use League\OAuth2\Client\Token\AccessToken;
+
+interface TokenStorageInterface 
+{
     /**
-     * The Domain used for storing the information in redis.
-     *
-     * @var string
+     * key prefix used for storing the information in redis.
      */
-    const STORAGE_DOMAIN = 'G2W_TOKEN_%s';
-    
+    const PREFIX = 'G2W_';
+
     /**
      * Fetch the access token for a given organizer with. 
-     * 
-     * @param string $organizerKey
      */
-    public function fetchToken(string $organizerKey);
+    public function fetchToken(string $organizerKey): ?AccessToken;
     
     /**
-     * Store a token for the current organizer.
-     * 
-     * @param \League\OAuth2\Client\Token\AccessToken $accessToken
+     * Save the accessToken with the specified id.
+     * Set an expiration of $seconds (default 365 days) for the token.
      */
-    public function saveToken(\League\OAuth2\Client\Token\AccessToken $accessToken);
-    
+    public function saveToken(AccessToken $accessToken, GotoWebinarResourceOwner $owner, int $seconds = 86400 * 365): self;
 }
 

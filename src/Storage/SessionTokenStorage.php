@@ -1,31 +1,31 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace DalPraS\OAuth2\Client\Storage;
 
-class SessionTokenStorage implements TokenStorageInterface {
-    
+use DalPraS\OAuth2\Client\Provider\GotoWebinarResourceOwner;
+use League\OAuth2\Client\Token\AccessToken;
+
+class SessionTokenStorage implements TokenStorageInterface 
+{
     /**
-     * FIXME not available yet
+     * Retrieves an accessToken from redis with the specified id.
      * 
-     * {@inheritDoc}
-     * @see \DalPraS\OAuth2\Client\Storage\TokenStorageInterface::fetchToken()
+     * @todo not working
      */
-    public function fetchToken(string $organizerKey)
+    public function fetchToken(string $organizerKey): ?AccessToken
     {
-        // TODO Auto-generated method stub
-        
+        return new AccessToken();
     }
 
     /**
-     * FIXME not available yet
+     * Save the accessToken with the specified id.
+     * Set an expiration of $seconds (default 365 days) for the token.
      * 
-     * {@inheritDoc}
-     * @see \DalPraS\OAuth2\Client\Storage\TokenStorageInterface::saveToken()
+     * @todo not working
      */
-    public function saveToken(\League\OAuth2\Client\Token\AccessToken $accessToken)
+    public function saveToken(AccessToken $accessToken, GotoWebinarResourceOwner $owner, int $seconds = 86400 * 365): self
     {
-        // TODO Auto-generated method stub
-        
+        return $this;
     }
-
 }
 
