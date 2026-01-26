@@ -3,7 +3,7 @@
 namespace DalPraS\OAuth2\Client\Provider;
 
 use DalPraS\OAuth2\Client\Provider\Exception\GotoWebinarProviderException;
-use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Client as GuzzleClient;
 use League\OAuth2\Client\Grant\GrantFactory;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -62,7 +62,7 @@ class GotoWebinar extends AbstractProvider
         if (empty($collaborators['httpClient'])) {
             $client_options = $this->getAllowedClientOptions($options);
 
-            $collaborators['httpClient'] = new HttpClient(
+            $collaborators['httpClient'] = new GuzzleClient(
                 array_intersect_key($options, array_flip($client_options))
             );
         }
